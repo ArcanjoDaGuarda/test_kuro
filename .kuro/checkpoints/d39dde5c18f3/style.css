@@ -1,0 +1,399 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--page-text);
+  overflow-x: hidden;
+}
+
+#theme-layer {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--bg-1), var(--bg-2));
+  transition: background 0.8s ease, color 0.8s ease;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  pointer-events: none;
+  animation: blobDrift 18s ease-in-out infinite alternate;
+}
+.blob-1 { width: 420px; height: 420px; top: -120px; left: -100px; background: var(--accent); }
+.blob-2 { width: 360px; height: 360px; bottom: -100px; right: -80px; background: var(--cake-base2); animation-delay: -6s; }
+.blob-3 { width: 300px; height: 300px; top: 40%; left: 60%; background: var(--frosting); animation-delay: -12s; }
+
+@keyframes blobDrift {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(60px, -40px) scale(1.15); }
+}
+
+#animation-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cake-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  width: 160px;
+  transform: translateX(-50%);
+}
+
+.cake {
+  position: relative;
+  width: 150px;
+  height: 110px;
+  margin: 0 auto;
+}
+
+.layer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+}
+.layer-bottom { bottom: 0; width: 150px; height: 55px; background: linear-gradient(180deg, var(--cake-base2), var(--cake-base)); }
+.layer-top { bottom: 50px; width: 110px; height: 40px; background: linear-gradient(180deg, var(--frosting), var(--cake-base2)); }
+
+.frosting {
+  position: absolute;
+  bottom: 86px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 118px;
+  height: 16px;
+  background: var(--frosting);
+  border-radius: 8px 8px 2px 2px;
+}
+.frosting::after {
+  content: "";
+  position: absolute;
+  top: 12px; left: 0;
+  width: 100%; height: 10px;
+  background:
+    radial-gradient(circle at 10px 0, var(--frosting) 8px, transparent 9px),
+    radial-gradient(circle at 34px 0, var(--frosting) 8px, transparent 9px),
+    radial-gradient(circle at 58px 0, var(--frosting) 8px, transparent 9px),
+    radial-gradient(circle at 82px 0, var(--frosting) 8px, transparent 9px),
+    radial-gradient(circle at 106px 0, var(--frosting) 8px, transparent 9px);
+  background-repeat: repeat-x;
+}
+
+.candle {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 26px;
+  background: repeating-linear-gradient(45deg, var(--candle) 0 6px, #fff 6px 12px);
+  border-radius: 3px;
+}
+.candle::before {
+  content: "";
+  position: absolute;
+  top: -12px; left: 50%;
+  width: 10px; height: 14px;
+  background: radial-gradient(circle at 50% 70%, #fff7ae 20%, #ffb703 60%, transparent 75%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation: flameFlicker 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes flameFlicker {
+  from { transform: translateX(-50%) scale(1); opacity: 1; }
+  to { transform: translateX(-50%) scale(0.85, 1.1); opacity: 0.85; }
+}
+
+.cake-shadow {
+  width: 140px;
+  height: 18px;
+  margin: 8px auto 0;
+  background: rgba(0, 0, 0, 0.18);
+  border-radius: 50%;
+  filter: blur(3px);
+}
+
+[data-mode="bounce"] .cake { transform-origin: 50% 100%; animation: cakeHop 1.4s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }
+[data-mode="bounce"] .cake-shadow { animation: shadowPulse 1.4s ease-in-out infinite; }
+
+@keyframes cakeHop {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  15% { transform: translateY(0) scaleY(0.9); }
+  45% { transform: translateY(-46px) scaleY(1.04); }
+  70% { transform: translateY(0) scaleY(0.94); }
+  85% { transform: translateY(0) scaleY(1.02); }
+}
+
+@keyframes shadowPulse {
+  0%, 100% { transform: scaleX(1); opacity: 1; }
+  45% { transform: scaleX(0.7); opacity: 0.5; }
+}
+
+[data-mode="spin"] .cake-wrap { perspective: 700px; }
+[data-mode="spin"] .cake { animation: cakeSpin 5s linear infinite; }
+
+@keyframes cakeSpin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+.confetti {
+  position: absolute;
+  top: -24px;
+  animation: confettiFall linear infinite;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(720deg); }
+}
+
+.splash-blob {
+  position: absolute;
+  border-radius: 46% 54% 55% 45% / 50% 44% 56% 50%;
+  opacity: 0;
+  animation: splashPulse ease-in-out infinite;
+}
+
+@keyframes splashPulse {
+  0% { transform: scale(0.2); opacity: 0; }
+  25% { opacity: 0.8; }
+  100% { transform: scale(1.5) translateY(-26px); opacity: 0; }
+}
+
+.steam {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.75);
+  filter: blur(6px);
+  opacity: 0;
+  animation: steamRise ease-in-out infinite;
+}
+
+@keyframes steamRise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  30% { opacity: 0.8; }
+  100% { transform: translateY(-160px) scale(1.5); opacity: 0; }
+}
+
+[data-mode="bake"] .cake { transform-origin: 50% 100%; animation: cakeBake 2.2s ease-in-out infinite; }
+
+@keyframes cakeBake {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.05, 0.95); }
+}
+
+.mode-badge {
+  position: fixed;
+  top: 18px; right: 18px;
+  z-index: 5;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(8px);
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--card-text);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  animation: badgePop 0.5s ease;
+}
+
+@keyframes badgePop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.site-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 1rem 1.5rem;
+  animation: headerIn 0.8s ease both;
+}
+
+@keyframes headerIn {
+  from { opacity: 0; transform: translateY(-24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.site-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 3.6rem;
+  line-height: 1.2;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+}
+
+.title-word { display: inline-block; animation: titleFloat 3.5s ease-in-out infinite; }
+.title-word.accent { color: var(--accent); animation-delay: -1.75s; transition: color 0.8s ease; }
+
+@keyframes titleFloat {
+  0%, 100% { transform: translateY(0) rotate(-1.5deg); }
+  50% { transform: translateY(-10px) rotate(1.5deg); }
+}
+
+.site-subtitle { margin-top: 0.4rem; font-weight: 300; opacity: 0.85; }
+
+.recipe-card {
+  position: relative;
+  z-index: 2;
+  max-width: 780px;
+  margin: 0 auto 3rem;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 26px;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(10px);
+  animation: cardIn 0.7s ease both;
+  transition: background 0.8s ease;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(26px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.recipe-img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.15);
+}
+
+.recipe-name {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin: 1.4rem 0 0.4rem;
+  color: var(--card-text);
+}
+
+.recipe-section { margin-top: 1.4rem; }
+
+.recipe-section h3 {
+  display: inline-block;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  border-bottom: 3px solid var(--frosting);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.6rem;
+  transition: color 0.8s ease;
+}
+
+.recipe-ingredients {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.1rem 1.6rem;
+}
+
+.recipe-ingredients li {
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
+  font-size: 0.95rem;
+}
+
+.recipe-instructions {
+  margin: 0;
+  padding-left: 1.3rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.recipe-instructions li { padding: 0.3rem 0; }
+.recipe-instructions li::marker { color: var(--accent); font-weight: 600; }
+
+.btn-another {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 1rem 2.6rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--cake-base2));
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.8s ease;
+}
+.btn-another:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 32px rgba(0, 0, 0, 0.28); }
+.btn-another:active { transform: translateY(0) scale(0.98); }
+.btn-another:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+.site-footer {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+.site-footer a { color: var(--accent); font-weight: 600; }
+
+.theme-1 {
+  --bg-1: #ffe0ec; --bg-2: #ffb3c6;
+  --accent: #e75480; --page-text: #4a2c3a; --card-text: #4a2c3a;
+  --card-bg: rgba(255, 255, 255, 0.82);
+  --frosting: #fff0f5; --cake-base: #a05a2c; --cake-base2: #c97b3d;
+  --plate: #ffffff; --candle: #e75480;
+}
+
+.theme-2 {
+  --bg-1: #ede7f6; --bg-2: #b39ddb;
+  --accent: #7b2fbf; --page-text: #37264d; --card-text: #37264d;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --frosting: #f3e8ff; --cake-base: #6d4c41; --cake-base2: #8d6e63;
+  --plate: #ffffff; --candle: #9575cd;
+}
+
+.theme-3 {
+  --bg-1: #d9f2e6; --bg-2: #7fd8be;
+  --accent: #0f766e; --page-text: #1f3d33; --card-text: #1f3d33;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --frosting: #eafff7; --cake-base: #8d5524; --cake-base2: #b06f37;
+  --plate: #ffffff; --candle: #26a69a;
+}
+
+.theme-4 {
+  --bg-1: #fff9c4; --bg-2: #ffd54f;
+  --accent: #ef6c00; --page-text: #5d4037; --card-text: #5d4037;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --frosting: #fffde7; --cake-base: #6d4c41; --cake-base2: #a1887f;
+  --plate: #ffffff; --candle: #ef5350;
+}
+
+.theme-5 {
+  --bg-1: #ffe0b2; --bg-2: #ffab91;
+  --accent: #e64a19; --page-text: #4e342e; --card-text: #4e342e;
+  --card-bg: rgba(255, 255, 255, 0.88);
+  --frosting: #fff3e0; --cake-base: #5d4037; --cake-base2: #8d6e63;
+  --plate: #ffffff; --candle: #ff7043;
+}
+
+@media (max-width: 640px) {
+  .site-title { font-size: 2.4rem; }
+  .recipe-card { padding: 1.3rem; margin: 0 1rem 2.5rem; }
+  .recipe-name { font-size: 1.5rem; }
+  .recipe-ingredients { grid-template-columns: 1fr; }
+  .mode-badge { top: 10px; right: 10px; font-size: 0.75rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

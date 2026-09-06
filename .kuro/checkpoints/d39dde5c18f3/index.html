@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoloMania — Receitas de Bolo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="theme-layer" class="theme-1">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div id="animation-stage" aria-hidden="true"></div>
+    <div id="mode-badge" class="mode-badge">🎂</div>
+
+    <header class="site-header">
+      <h1 class="site-title">
+        <span class="title-word">Bolo</span><span class="title-word accent">Mania</span>
+      </h1>
+      <p class="site-subtitle">Receitas deliciosas sorteadas para voce</p>
+    </header>
+
+    <main class="recipe-card" id="recipe-card">
+      <img id="recipe-img" class="recipe-img" src="" alt="Foto do bolo">
+      <h2 id="recipe-name" class="recipe-name">Carregando receita...</h2>
+      <div class="recipe-section">
+        <h3>Ingredientes</h3>
+        <ul id="recipe-ingredients" class="recipe-ingredients"></ul>
+      </div>
+      <div class="recipe-section">
+        <h3>Modo de Preparo</h3>
+        <ol id="recipe-instructions" class="recipe-instructions"></ol>
+      </div>
+      <button id="btn-another" class="btn-another">Outra Receita 🎂</button>
+    </main>
+
+    <footer class="site-footer">
+      <p>Receitas fornecidas por <a href="https://www.themealdb.com" target="_blank" rel="noopener">TheMealDB</a></p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
